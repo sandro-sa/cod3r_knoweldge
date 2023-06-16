@@ -93,5 +93,24 @@ module.exports = app => {
       .catch(err => res.status(500).send(err))
   }
 
-  return { save, remove, get, getById }
+  const toTree = ( categories, tree ) => {
+    // filtra as categorias que nao tem parent id setados
+    if(!tree) tree = categories.filter(c => !c.parentId)
+    // encontra os filhos do no 
+    tree = tree.map(parentNode => {
+      const isChild = node => node.parentId == parentNode.id 
+      parentNode.children = toTree(categories, categories.filter(isChild))
+      return parentNode
+
+    })
+    return tree
+  }
+
+  const getTree = (req, res ) => {
+    app.db('categories')
+      .then(categories => res.json(toTree(withPath(categories))))
+      .catch(err => res.status(500).send(err))
+  }
+
+  return { save, remove, get, getById, getTree}
 }
