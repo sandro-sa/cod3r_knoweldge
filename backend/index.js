@@ -8,6 +8,7 @@ const db = require('./config/db.js')
 app.db = db
 // 7
 consign()
+  .include('./config/passport.js')
   .then('./config/middlewares.js')
   .then('./api/validation.js')
   .then('./api')
