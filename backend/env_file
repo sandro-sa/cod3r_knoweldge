@@ -1,3 +1,11 @@
 module.exports = {
-    authSecret: ''
+    authSecret: '',
+    db: {
+        host: 'localhost',
+        port: '5432',
+        user:     'postgres',
+        database: '',
+        password: ''
+    },
+    mongoconect: ''
 }
